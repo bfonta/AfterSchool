@@ -6,12 +6,12 @@
 int main() {
   int N;
   std::cin >> N;
-  assert( N%2==0 and N <= 10e5 and N >= 1 );
+  //assert( N%2==0 and N <= 10e5 and N >= 1 );
 
   std::vector<int> f(N);
   for(int i=0; i<N; ++i) {
 	std::cin >> f[i];
-	assert( f[i] <= 2000 and f[i] >= 1 );
+	//assert( f[i] <= 2000 and f[i] >= 1 );
   }
 
   int sumA=0, sumB=0;
