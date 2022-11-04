@@ -43,12 +43,6 @@ int main() {
   int ntests, nperm;
   cin >> ntests;
 
-  // for(int i = 1000; i>0; --i) 
-  // 	{
-  // 	  std::cout << i << " ";
-  // 	}
-  // exit(0);
-
   for(int i=0; i<ntests; ++i) 
 	{
 	  found = false;
@@ -67,6 +61,7 @@ int main() {
 		  break;
 		}
 	  }
+
 	  if(!found)
 		cout << "NO" << "\n";
 	}
