@@ -4,7 +4,7 @@ using namespace std;
 
 int to_digit(char x) { return (int)x - '0'; }
 
-//A. Sequencia de parenteses
+//B. Sequencia de parenteses
 int main() {
   string in;
   cin >> in;
