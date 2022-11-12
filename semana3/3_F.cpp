@@ -1,51 +1,24 @@
 #include <iostream>
-#include <vector>
-#define ll long long
+     
 using namespace std;
-
-
-ll sum(ll idx, ll K, const vector<ll>& a) {
-  ll res=0;
-  for(ll w=0; w<K; ++w)
-	res += a[idx+w];
-  return res;
-}
-
-//E. Regar as plantas
+     
 int main() {
-  ll N, K; cin >> N >> K;
-  vector<ll> a(N);
-  for (ll i = 0; i < N; ++i)
-	cin >> a[i];
-  
-  ll res=0, max=3;
-  ll sumi=0, sumj=0, sumk=0;
-  for(int bigKi=K; bigKi>1; --bigKi) {
-	for(int bigKj=K; bigKj>1; --bigKj) {
-	  for(int bigKk=K; bigKk>1; --bigKk) {
-		if(bigKi+bigKj+bigKk > N) break;
-		
-		//1st window
-		for(ll i=0; i<N-bigKi; ++i) {
-		  sumi = sum(i, bigKi, a);
-		  res += sumi;
-		  //2nd window
-		  for(ll j=i+bigKi; j<i+bigKi+bigKj; ++j) {
-			sumj = sum(j, bigKj, a);
-			res += sumj;
-			//3rd window
-			for(ll k=j+bigKj; k<N-bigKk; ++k) {
-			  sumk = sum(k, bigKk, a);
-			  if(res+sumk > max)
-				max = res+sumk;
-			}
-			res -= sumj;
-		  }
-		  res -= sumi;
+  int N, K, s, res = 0;
+  cin >> N >> K;
+  int A[N];
+  for (int i = 0; i < N; i++) cin >> A[i];
+  if (3 * K >= N)
+	for (int i = 0; i < N; i++) res += A[i];
+  else
+	for (int i = 0; i <= N - 3 * K; i++)
+	  for (int j = i + K; j <= N - 2 * K; j++)
+		for (int l = j + K; l <= N - K; l++) {
+		  s = 0;
+		  for (int m = i; m < i + K; m++) s += A[m];
+		  for (int m = j; m < j + K; m++) s += A[m];
+		  for (int m = l; m < l + K; m++) s += A[m];
+		  res = max(res,s);
 		}
-	  }
-	}
-  }
-  std::cout << max << std::endl;
+  cout << res << endl;
   return 0;
 }
