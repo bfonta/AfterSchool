@@ -13,20 +13,23 @@ int linear(const vector<int> &arr, int pot) {
 }
 
 int logar(const vector<int> &arr, int pot) {
-  int iold = 0, itmp;
+  int iold = 1, itmp, extra;
   int inew = arr.size()/2;
   while(true)
 	{
-	  if(pot<arr[inew])
-		itmp = inew - abs(inew-iold)/2;
+	  if(iold==inew) break;
+	  
+	  //extra = abs(inew-iold)==1 ? 1 : 0;
+	  extra = 0;
+	  if(pot<arr[inew-1])
+		itmp = inew - abs(inew-iold)/2 - extra;
 	  else
-		itmp = inew + abs(inew-iold)/2;
+		itmp = inew + abs(inew-iold)/2 + extra + 1;
+	  //std::cout << "--- " << inew << " " << iold << " " << itmp << std::endl;
 	  iold = inew;
 	  inew = itmp;
-
-	  if(iold==inew) break;
 	}
-  return inew;
+  return inew-1;
 }
 
 //A. O ataque ao Mosteiro da Batalha
