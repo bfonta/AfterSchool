@@ -2,36 +2,57 @@
 #include <vector>
 using namespace std;
 
-// We assume the sequences are sorted
-void merge(vector<int>& seq, vector<int>& seq1, vector<int>& seq2) {
-  int n = seq1.size();
+void print_vector(const vector<int>& v)
+{
+  for (int i=0; i<v.size(); ++i) {
+    cout << v[i] << " ";
+	if(i == v.size()-1)
+	  cout << endl;
+  }
+}
+
+void merge(vector<int>& seq, int left, int mid, int right) {
+  int nl = mid-left+1, nr = right-mid;
+  vector<int> seql(nl), seqr(nr);
+  for(int i=0; i<nl; ++i) seql[i] = seq[left+i];
+  for(int i=0; i<nr; ++i) seqr[i] = seq[mid+1+i];
   
-  int is = 0, i1 = 0, i2 = 0;
-  while (i1 < n || i2 < n) {
-	if (i1 != n && (i2 == n || seq1[i1] <= seq2[i2])) {
-	  seq[is] = seq1[i1];
+  int is = left, il = 0, ir = 0;
+  while (il < nl || ir < nr) {
+	if (il != nl && (ir == nr || seql[il] <= seqr[ir])) {
+	  seq[is] = seql[il];
 	  is++;
-	  i1++;
+	  il++;
 	}
 	else {
-	  seq[is] = seq2[i2];
+	  seq[is] = seqr[ir];
 	  is++;
-	  i2++;
+	  ir++;
 	}
   }
+}
+
+void merge_sort(vector<int>& vec,
+				int const left, int const right)
+{
+  if (left >= right)
+	return;
+
+  auto mid = left + (right-left)/2;
+  merge_sort(vec, left, mid);
+  merge_sort(vec, mid+1, right);
+  merge(vec, left, mid, right);
 }
 
 int main() {
   int n;
   cin >> n;
-  vector<int> seq(2*n), seq1(n), seq2(n);
-  for (int i = 0; i < n; ++i) cin >> seq1[i];
-  for (int i = 0; i < n; ++i) cin >> seq2[i];
+  vector<int> seq(n);
+  for (int i = 0; i<n; ++i) cin >> seq[i];
 
-  merge(seq, seq1, seq2);
-
-  for (int i=0; i<2*n; ++i) cout << seq[i] << " ";
-  cout << endl;
-
+  print_vector(seq);
+  merge_sort(seq, 0, n-1);
+  print_vector(seq);
+  
   return 0;
 }
